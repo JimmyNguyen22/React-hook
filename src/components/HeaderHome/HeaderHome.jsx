@@ -1,7 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function HeaderHome(props) {
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
       <NavLink className="navbar-brand" to="/">
@@ -19,14 +21,14 @@ export default function HeaderHome(props) {
       <div className="collapse navbar-collapse" id="collapsibleNavId">
         <ul className="navbar-nav me-auto mt-2 mt-lg-0">
           <li className="nav-item active">
-            <a className="nav-link" href="#">
-              Home <span className="visually-hidden">(current)</span>
-            </a>
+            <NavLink className="nav-link" to="/">
+              Home
+            </NavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
+            <NavLink className="nav-link" to="/search">
+              Search
+            </NavLink>
           </li>
           <li className="nav-item dropdown">
             <a
@@ -77,12 +79,38 @@ export default function HeaderHome(props) {
               </NavLink>
             </div>
           </li>
+          <li className="nav-item dropdown">
+            <a
+              className="nav-link dropdown-toggle"
+              href="#"
+              id="dropdownId"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              Router Hooks
+            </a>
+            <div className="dropdown-menu" aria-labelledby="dropdownId">
+              <NavLink className="dropdown-item" to="/reactform">
+                Demo navigate
+              </NavLink>
+            </div>
+          </li>
         </ul>
-        <form className="d-flex my-2 my-lg-0">
+        <form
+          className="d-flex my-2 my-lg-0"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const keyword = document.querySelector("#keyword").value;
+
+            navigate(`/search?keyword=${keyword}`);
+          }}
+        >
           <input
             className="form-control me-sm-2"
             type="text"
             placeholder="Search"
+            id="keyword"
           />
           <button
             className="btn btn-outline-success my-2 my-sm-0"

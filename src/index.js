@@ -15,6 +15,11 @@ import { Provider } from "react-redux";
 import { store } from "./redux/configStore";
 import DemoNumber from "./pages/HooksDemo/UseRedux/DemoNumber/DemoNumber";
 import { DemoFacebookApp } from "./pages/HooksDemo/UseRedux/DemoFacebookApp/DemoFacebookApp";
+import ReactForm from "./pages/HookRoutes/ReactForm/ReactForm";
+import Profile from "./pages/HookRoutes/ReactForm/Profile";
+import Home from "./pages/Home/Home";
+import Detail from "./pages/Detail/Detail";
+import Search from "./pages/Search/Search";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +27,10 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="" element={<App></App>}>
+          <Route index element={<Home></Home>}></Route>
+          <Route path="detail">
+            <Route path=":id" element={<Detail></Detail>}></Route>
+          </Route>
           <Route
             path="usestate"
             element={<UseStateDemo></UseStateDemo>}
@@ -41,6 +50,9 @@ root.render(
             path="reduxfacebook"
             element={<DemoFacebookApp></DemoFacebookApp>}
           ></Route>
+          <Route path="reactform" element={<ReactForm></ReactForm>}></Route>
+          <Route path="profile" element={<Profile></Profile>}></Route>
+          <Route path="search" element={<Search></Search>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
