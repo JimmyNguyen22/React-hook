@@ -2,30 +2,22 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { getProductDetailActionApi } from "../../redux/reducers/productReducer";
 
 export default function Detail(props) {
-  const [productDetail, setProductDetail] = useState([]);
+  // const [productDetail, setProductDetail] = useState([]);
+  const { productDetail } = useSelector((state) => state.productReducer);
+  const dispatch = useDispatch();
 
   const params = useParams();
   // navigate dùng trong th đăng nhập, thêm sp xong chuyển huong, chuyển hướng thì dung navigate
   const navigate = useNavigate();
 
-  const getProductDetailApi = async () => {
-    try {
-      let result = await axios({
-        url: "https://shop.cyberlearn.vn/api/product/getbyid?id=" + params.id,
-        method: "GET",
-      });
-      console.log("ket qua", result.data.content);
-
-      // Sau khi lấy kq từ api về đưa vào state arrProduct
-      setProductDetail(result.data.content);
-
-      console.log(productDetail);
-    } catch (err) {
-      console.log(err);
-    }
+  const getProductDetailApi = () => {
+    const actionThunk = getProductDetailActionApi(params.id);
+    dispatch(actionThunk);
   };
 
   useEffect(() => {

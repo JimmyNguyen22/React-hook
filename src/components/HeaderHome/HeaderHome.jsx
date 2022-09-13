@@ -57,6 +57,12 @@ export default function HeaderHome(props) {
               <NavLink className="dropdown-item" to="/useref">
                 Use Ref
               </NavLink>
+              <NavLink className="dropdown-item" to="/customhook">
+                customHook(useRoute)
+              </NavLink>
+              <NavLink className="dropdown-item" to="/demoanimation">
+                animation
+              </NavLink>
             </div>
           </li>
           <li className="nav-item dropdown">
