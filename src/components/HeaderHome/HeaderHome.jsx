@@ -1,8 +1,24 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function HeaderHome(props) {
   const navigate = useNavigate();
+  const { userLogin } = useSelector((state) => state.userReducer);
+  const renderNavLink = () => {
+    if (userLogin) {
+      return (
+        <NavLink className="nav-link" to="/profile">
+          Hello ! {userLogin.email}
+        </NavLink>
+      );
+    }
+    return (
+      <NavLink className="nav-link" to="/login">
+        Login
+      </NavLink>
+    );
+  };
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -30,6 +46,7 @@ export default function HeaderHome(props) {
               Search
             </NavLink>
           </li>
+          <li className="nav-item">{renderNavLink()}</li>
           <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
