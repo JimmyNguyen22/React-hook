@@ -14,11 +14,11 @@ export default function Profile() {
   }, []);
 
   const renderOrderHistory = () => {
-    return userLogin.ordersHistory?.map((order, index) => {
+    return userLogin?.ordersHistory?.map((order, index) => {
       return (
         <div className="orderDetail">
           <h3>
-            Order detail {moment(order.date).format("DD/MM/YYYY hh:mm:ss A")}
+            Order detail {moment(order?.date).format("DD/MM/YYYY hh:mm:ss A")}
           </h3>
           <table className="table">
             <thead>
@@ -59,9 +59,9 @@ export default function Profile() {
       <div className="d-flex">
         <div className="w-25">
           <div className="profile mt-5">
-            <img src={userLogin.avatar} height={200} alt="" />
-            <div>email: {userLogin.email}</div>
-            <div>name: {userLogin.name}</div>
+            <img src={userLogin?.avatar} height={200} alt="" />
+            <div>email: {userLogin?.email}</div>
+            <div>name: {userLogin?.name}</div>
           </div>
         </div>
         <div className="w-75">

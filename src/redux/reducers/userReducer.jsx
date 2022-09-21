@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { history } from "../../index";
 import {
   ACCESS_TOKEN,
   getStore,
   getStoreJSON,
+  http,
   setCookie,
   setStore,
   setStoreJSON,
@@ -34,11 +36,8 @@ export default userReducer.reducer;
 export const signinApi = (userLogin) => {
   return async (dispatch) => {
     try {
-      let result = await axios({
-        url: "https://shop.cyberlearn.vn/api/Users/signin",
-        method: "POST",
-        data: userLogin,
-      });
+      let result = await http.post("Users/signin", userLogin);
+
       // thành công
       // lưu lại token
       setStore(ACCESS_TOKEN, result.data.content.accessToken);
@@ -53,8 +52,12 @@ export const signinApi = (userLogin) => {
       const action = setUserLoginAction(result.data.content);
 
       dispatch(action);
+
+      history.push("/profile");
     } catch (err) {
       console.log({ err });
+      alert("Tài khoản mk ko đúng !");
+      history.push("/login");
     }
   };
 };
@@ -63,18 +66,14 @@ export const signinApi = (userLogin) => {
 export const getProfileApi = () => {
   return async (dispatch) => {
     try {
-      let result = await axios({
-        url: "https://shop.cyberlearn.vn/api/Users/getProfile",
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${getStore(ACCESS_TOKEN)}`,
-        },
-      });
+      let result = await http.post("/users/getprofile");
       console.log("ket qua", result.data.content);
       // tạo ra actionCreator => dispatch lên redux
       const action = setUserLoginAction(result.data.content);
       dispatch(action);
     } catch (e) {
+      alert("đăng nhập để vào trang");
+      history.push("/login");
       console.log(e);
     }
   };

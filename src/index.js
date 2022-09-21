@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 // cấu hình browser router
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import UseStateDemo from "./pages/HooksDemo/UseStateDemo/UseStateDemo";
 import UseEffectDemo from "./pages/HooksDemo/UseEffectDemo/UseEffectDemo";
 import UseCallBackDemo from "./pages/HooksDemo/UseCallBackDemo/UseCallBackDemo";
@@ -24,10 +24,20 @@ import DemoUseRoute from "./pages/DemoUseRoute/DemoUseRoute";
 import DemoAnimation from "./pages/DemoAnimation/DemoAnimation";
 import Login from "./pages/Login/Login";
 
+// tạo 1 biến để quản lý chuyển hướng trang
+import { createBrowserHistory } from "history";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import DemoHoc from "./pages/DemoHoc/DemoHoc";
+import AdminTemplates from "./templates/AdminTemplates";
+import UserManagement from "./pages/Admin/UserManagement/UserManagement";
+import ProductManagement from "./pages/Admin/ProductManagement/ProductManagement";
+
+export const history = createBrowserHistory();
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <Routes>
         <Route path="" element={<App></App>}>
           <Route index element={<Home></Home>}></Route>
@@ -65,9 +75,23 @@ root.render(
             element={<DemoAnimation></DemoAnimation>}
           ></Route>
           <Route path="login" element={<Login></Login>}></Route>
+          <Route path="demohoc" element={<DemoHoc></DemoHoc>}></Route>
+
+          <Route path="*" element={<Navigate to={"/"}></Navigate>}></Route>
         </Route>
+
+        <Route
+          path="admin/users"
+          element={<AdminTemplates component={UserManagement}></AdminTemplates>}
+        ></Route>
+        <Route
+          path="admin/products"
+          element={
+            <AdminTemplates component={ProductManagement}></AdminTemplates>
+          }
+        ></Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   </Provider>
 );
 

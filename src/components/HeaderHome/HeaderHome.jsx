@@ -1,6 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import {
+  ACCESS_TOKEN,
+  clearCookie,
+  clearLocalStorage,
+  USER_LOGIN,
+} from "../../util/config";
 
 export default function HeaderHome(props) {
   const navigate = useNavigate();
@@ -8,15 +14,39 @@ export default function HeaderHome(props) {
   const renderNavLink = () => {
     if (userLogin) {
       return (
-        <NavLink className="nav-link" to="/profile">
-          Hello ! {userLogin.email}
-        </NavLink>
+        <>
+          {" "}
+          <li>
+            <NavLink className="nav-link" to="/profile">
+              Hello ! {userLogin.email}
+            </NavLink>
+          </li>
+          <li>
+            <span
+              className="nav-link"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                clearLocalStorage(USER_LOGIN);
+                clearLocalStorage(ACCESS_TOKEN);
+                clearCookie(ACCESS_TOKEN);
+                // f5 lại trang
+                // window.location.reload();
+                window.location.href = "/"; // clear luôn redux
+                // khaido@gmail.com
+              }}
+            >
+              Đăng xuất
+            </span>
+          </li>
+        </>
       );
     }
     return (
-      <NavLink className="nav-link" to="/login">
-        Login
-      </NavLink>
+      <li>
+        <NavLink className="nav-link" to="/login">
+          Login
+        </NavLink>
+      </li>
     );
   };
 
@@ -46,7 +76,12 @@ export default function HeaderHome(props) {
               Search
             </NavLink>
           </li>
-          <li className="nav-item">{renderNavLink()}</li>
+          {renderNavLink()}
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/demohoc">
+              Demo HOC
+            </NavLink>
+          </li>
           <li className="nav-item dropdown">
             <a
               className="nav-link dropdown-toggle"
