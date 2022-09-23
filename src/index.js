@@ -81,11 +81,11 @@ root.render(
         </Route>
 
         <Route
-          path="admin/users"
+          path="users"
           element={<AdminTemplates component={UserManagement}></AdminTemplates>}
         ></Route>
         <Route
-          path="admin/products"
+          path="products"
           element={
             <AdminTemplates component={ProductManagement}></AdminTemplates>
           }

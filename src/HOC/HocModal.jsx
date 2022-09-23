@@ -1,22 +1,27 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 export default function HocModal(props) {
+  const { title, Component, submitForm } = useSelector(
+    (state) => state.modalReducer
+  );
+
   return (
     <div>
       {/* Modal trigger button */}
-      <button
+      {/* <button
         type="button"
         className="btn btn-primary btn-lg"
         data-bs-toggle="modal"
-        data-bs-target={`#${props.id}`}
+        data-bs-target={`#modal`}
       >
         Launch
-      </button>
+      </button> */}
       {/* Modal Body */}
       {/* if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard */}
       <div
         className="modal fade"
-        id={props.id}
+        id="modal"
         tabIndex={-1}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
@@ -25,13 +30,13 @@ export default function HocModal(props) {
         aria-hidden="true"
       >
         <div
-          className="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+          className="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-m"
           role="document"
         >
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="modalTitleId">
-                {props.title}
+                {title}
               </h5>
               <button
                 type="button"
@@ -41,7 +46,7 @@ export default function HocModal(props) {
               />
             </div>
             <div className="modal-body">
-              <props.Component></props.Component>
+              <Component></Component>
             </div>
             <div className="modal-footer">
               <button
@@ -51,8 +56,12 @@ export default function HocModal(props) {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
-                Save
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={submitForm}
+              >
+                Submit
               </button>
             </div>
           </div>

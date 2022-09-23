@@ -1,9 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import HocModal from "../HOC/HocModal";
 
 export default function AdminTemplates(props) {
   return (
     <div>
+      <HocModal></HocModal>
       <div className="d-flex">
         <div className="dashboard w-25 bg-dark" style={{ minHeight: "100vh" }}>
           <img
